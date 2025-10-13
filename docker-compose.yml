@@ -20,7 +20,7 @@ services:
 
     volumes:
       # 由 ctl 渲染后的最终文件（固定文件名与 NPM 预期一致）
-      - ./.rendered/_listen.conf:/app/backend/templates/_listen.conf:ro
+      - ./.rendered/_listen.conf:/app/templates/_listen.conf:rw
       - ./.rendered/default.conf:/etc/nginx/conf.d/default.conf:rw
       - ./rootfs/etc/nginx/conf.d/include/proxy.conf:/etc/nginx/conf.d/include/proxy.conf:rw
       # 数据卷

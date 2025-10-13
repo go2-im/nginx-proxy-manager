@@ -67,7 +67,7 @@ check_in_container() {
   [[ -n "${cid}" ]] || { err "容器未运行"; return 1; }
 
   info "校验容器内文件与端口..."
-  docker exec "${cid}" bash -lc "grep -q 'listen ${HTTP_PORT};' /app/backend/templates/_listen.conf" \
+  docker exec "${cid}" bash -lc "grep -q 'listen ${HTTP_PORT};' /app/templates/_listen.conf" \
     && ok "_listen.conf 包含 listen ${HTTP_PORT}" \
     || { err "_listen.conf 未包含 listen ${HTTP_PORT}"; return 1; }
 
