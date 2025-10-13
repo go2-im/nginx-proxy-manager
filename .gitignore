@@ -1,3 +1,6 @@
 /.env
 /.rendered/
 /.idea/
+/data/
+/letsencrypt/
+/mysql/
