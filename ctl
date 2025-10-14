@@ -8,6 +8,10 @@ LISTEN_TPL="backend-templates/_listen.conf.tpl"
 LISTEN_OUT="${RENDER_DIR}/_listen.conf"
 DEFAULT_TPL="rootfs/etc/nginx/conf.d/default.conf.tpl"
 DEFAULT_OUT="${RENDER_DIR}/default.conf"
+PROXY_CONF_TPL="rootfs/etc/nginx/conf.d/include/proxy.conf.tpl"
+PROXY_CONF_OUT="${RENDER_DIR}/proxy.conf"
+PROXY_HOST_TPL="backend-templates/proxy_host.conf.tpl"
+PROXY_HOST_OUT="${RENDER_DIR}/proxy_host.conf"
 
 cd "$(dirname "$0")"
 
@@ -42,6 +46,8 @@ render() {
 
   [[ -f "${LISTEN_TPL}"  ]] || { err "缺少模板：${LISTEN_TPL}";  exit 1; }
   [[ -f "${DEFAULT_TPL}" ]] || { err "缺少模板：${DEFAULT_TPL}"; exit 1; }
+  [[ -f "${PROXY_CONF_TPL}" ]] || { err "缺少模板：${PROXY_CONF_TPL}"; exit 1; }
+  [[ -f "${PROXY_HOST_TPL}" ]] || { err "缺少模板：${PROXY_HOST_TPL}"; exit 1; }
 
   info "渲染 ${LISTEN_TPL} -> ${LISTEN_OUT}"
   envsubst '${HTTP_PORT} ${HTTPS_PORT}' < "${LISTEN_TPL}"  > "${LISTEN_OUT}"
@@ -49,6 +55,12 @@ render() {
 
   info "渲染 ${DEFAULT_TPL} -> ${DEFAULT_OUT}"
   envsubst '${HTTP_PORT} ${HTTPS_PORT}' < "${DEFAULT_TPL}" > "${DEFAULT_OUT}"
+
+  info "渲染 ${PROXY_CONF_TPL} -> ${PROXY_CONF_OUT}"
+  envsubst '${HTTP_PORT} ${HTTPS_PORT}' < "${PROXY_CONF_TPL}" > "${PROXY_CONF_OUT}"
+
+  info "渲染 ${PROXY_HOST_TPL} -> ${PROXY_HOST_OUT}"
+  envsubst '${HTTP_PORT} ${HTTPS_PORT}' < "${PROXY_HOST_TPL}" > "${PROXY_HOST_OUT}"
 
   ok "渲染完成：HTTP=${HTTP_PORT}, HTTPS=${HTTPS_PORT}"
 }
