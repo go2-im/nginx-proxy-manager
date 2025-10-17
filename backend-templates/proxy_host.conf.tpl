@@ -34,7 +34,7 @@ proxy_http_version 1.1;
   location / {
 
     {% if forward_scheme == "https" %}
-    proxy_ssl_server_name on;
+    proxy_ssl_server_name off;
     proxy_ssl_verify off;
     {% endif %}
 
